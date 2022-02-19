@@ -86,6 +86,12 @@ void Peeps::drainMoveQueue()
                 indiv.loc = newLoc;
                 indiv.lastMoveDir = moveDir;
             }
+
+            if (signals.getMagnitude(FOOD, indiv.loc) > 0)
+            {
+                indiv.energy += p.startingEnergy;
+                signals.setMagnitude(FOOD, indiv.loc, 0);
+            }
         }
     }
     moveQueue.clear();

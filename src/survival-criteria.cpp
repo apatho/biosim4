@@ -184,6 +184,10 @@ std::pair<bool, float> passedSurvivalCriterion(const Indiv &indiv, unsigned chal
     case CHALLENGE_RADIOACTIVE_WALLS:
         return { true, 1.0 };
 
+    // No challenge, all live become parents.
+    case CHALLENGE_SURVIVE:
+        return { indiv.energy > p.startingEnergy, 1.0 };
+
     // Survivors are those touching any wall at the end of the generation
     case CHALLENGE_AGAINST_ANY_WALL:
         {

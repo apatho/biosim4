@@ -14,18 +14,18 @@ set output "./images/log.png"
 
 set mxtics
 set ytics autofreq nomirror tc lt 2
-set yrange [ 0:8000 ]
-set y2range [ 0:1 ]
+set yrange [ 0:1000 ]
+set y2range [ 0:1000 ]
 set y2tics autofreq nomirror tc lt 1
 set grid
 set key lmargin
 
 ScaleSurvivors(s) = s
 ScaleGenomeLength(y)= y*2
-ScaleDiversity(d)= d
+ScaleDiversity(d)= d/1000
 #ScaleMurders(m) = m
 
 plot "./logs/epoch-log.txt" \
        using 1:(ScaleSurvivors($2)) with lines lw 2 linecolor 2 title "Survivors", \
-    "" using 1:(ScaleDiversity($3)) with lines lw 2 linecolor 1 title "Diversity" axes x1y2
+    "" using 1:(ScaleDiversity($8)) with lines lw 2 linecolor 1 title "Total energy" axes x1y2
 

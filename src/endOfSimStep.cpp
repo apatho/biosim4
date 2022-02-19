@@ -79,6 +79,15 @@ void endOfSimStep(unsigned simStep, unsigned generation)
     peeps.drainMoveQueue();
     signals.fade(0); // takes layerNum  todo!!!
 
+    // Spawn food
+    const int foodToSpawn = simStep == 0 ? p.population : 1;
+    for (int i = 0; i < foodToSpawn; ++i)
+    {
+        unsigned x = randomUint(0, p.sizeX - 1);
+        unsigned y = randomUint(0, p.sizeY - 1);
+        signals.setMagnitude(FOOD, Coord(x, y), 1);
+    }
+
     // saveVideoFrameSync() is the synchronous version of saveVideFrame()
     if (p.saveVideo &&
                 ((generation % p.videoStride) == 0

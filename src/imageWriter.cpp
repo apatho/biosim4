@@ -73,6 +73,20 @@ void saveOneFrameImmed(const ImageFrameData &data)
                 1.0);  // alpha
     }
 
+    // Draw food
+    for (const Coord& foodLoc : data.foodLocs) {
+        color[0] = 0;    // R: 0..255
+        color[1] = 255;  // G: 0..255
+        color[2] = 0;    // B: 0..255
+
+        image.draw_circle(
+            foodLoc.x * p.displayScale,
+            ((p.sizeY - foodLoc.y) - 1) * p.displayScale,
+            2,
+            color,  // rgb
+            1.0);  // alpha
+    }
+
     //image.save_png(imageFilename.str().c_str(), 3);
     imageList.push_back(image);
 
@@ -136,6 +150,7 @@ bool ImageWriter::saveVideoFrame(unsigned simStep, unsigned generation)
         data.indivColors.clear();
         data.barrierLocs.clear();
         data.signalLayers.clear();
+        data.foodLocs.clear();
         //todo!!!
         for (uint16_t index = 1; index <= p.population; ++index) {
             const Indiv &indiv = peeps[index];
@@ -177,6 +192,7 @@ bool ImageWriter::saveVideoFrameSync(unsigned simStep, unsigned generation)
     data.indivColors.clear();
     data.barrierLocs.clear();
     data.signalLayers.clear();
+    data.foodLocs.clear();
     //todo!!!
     for (uint16_t index = 1; index <= p.population; ++index) {
         const Indiv &indiv = peeps[index];
@@ -189,6 +205,17 @@ bool ImageWriter::saveVideoFrameSync(unsigned simStep, unsigned generation)
     auto const &barrierLocs = grid.getBarrierLocations();
     for (Coord loc : barrierLocs) {
         data.barrierLocs.push_back(loc);
+    }
+
+    for (unsigned x = 0; x < p.sizeX; ++x)
+    {
+        for (unsigned y = 0; y < p.sizeY; ++y)
+        {
+            if (signals.getMagnitude(FOOD, Coord(x, y)) > 0)
+            {
+                data.foodLocs.push_back(Coord(x, y));
+            }
+        }
     }
 
     saveOneFrameImmed(data);

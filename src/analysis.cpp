@@ -293,6 +293,17 @@ std::pair<float, float> averageNeuralNetSize()
     return { float(totalNnetNodes) / aliveIndividuals, float(totalConnections) / aliveIndividuals };
 }
 
+int totalEnergy()
+{
+    int result = 0;
+    for (size_t index = 1; index <= p.population; ++index) {
+        if (peeps[index].alive) {
+            result += peeps[index].energy;
+        }
+    }
+    return result;
+}
+
 // The epoch log contains one line per generation in a format that can be
 // fed to graphlog.gp to produce a chart of the simulation progress.
 // ToDo: remove hardcoded filename.
@@ -318,6 +329,7 @@ void appendEpochLog(unsigned generation, unsigned numberSurvivors, unsigned murd
                 << murderCount << " " 
                 << averageNnetNodeCount << " "
                 << averageConnectionCount << " "
+                << totalEnergy() << " "
                 << std::endl;
     } else {
         assert(false);

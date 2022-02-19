@@ -14,7 +14,6 @@ void Signals::init(uint16_t numLayers, uint16_t sizeX, uint16_t sizeY)
 
 // Increases the specified location by centerIncreaseAmount,
 // and increases the neighboring cells by neighborIncreaseAmount
-
 // Is it ok that multiple readers are reading this container while
 // this single thread is writing to it?  todo!!!
 void Signals::increment(uint16_t layerNum, Coord loc)
@@ -57,5 +56,11 @@ void Signals::fade(unsigned layerNum)
         }
     }
 }
+
+void Signals::setMagnitude(uint16_t layerNum, Coord loc, uint8_t magnitude)
+{
+    signals[layerNum][loc.x][loc.y] = magnitude;
+}
+
 
 } // end namespace BS

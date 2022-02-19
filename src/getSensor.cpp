@@ -331,15 +331,15 @@ float Indiv::getSensor(Sensor sensorNum, unsigned simStep) const
     case Sensor::SIGNAL0:
         // Returns magnitude of signal0 in the local neighborhood, with
         // 0.0..maxSignalSum converted to sensorRange 0.0..1.0
-        sensorVal = getSignalDensity(0, loc);
+        sensorVal = getSignalDensity(1, loc);
         break;
     case Sensor::SIGNAL0_FWD:
         // Sense signal0 density along axis of last movement direction
-        sensorVal = getSignalDensityAlongAxis(0, loc, lastMoveDir);
+        sensorVal = getSignalDensityAlongAxis(1, loc, lastMoveDir);
         break;
     case Sensor::SIGNAL0_LR:
         // Sense signal0 density along an axis perpendicular to last movement direction
-        sensorVal = getSignalDensityAlongAxis(0, loc, lastMoveDir.rotate90DegCW());
+        sensorVal = getSignalDensityAlongAxis(1, loc, lastMoveDir.rotate90DegCW());
         break;
     case Sensor::GENETIC_SIM_FWD:
     {
